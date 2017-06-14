@@ -1,0 +1,19 @@
+{
+	"ATL1_Integer": {
+		"cond": "gt",
+    "value": 40.00
+	},
+	"ATL2_String": {
+		"cond": "ne",
+    "value_type": "",
+		"value": "LOW"
+	},
+  "ATL2_Datetime": {
+		"cond": "lt",
+    "value": "2017-05-05 00:00:00"
+	},
+	"ATL3_Datetime": {
+		"cond": "le",
+    "value": "current"
+	}
+}
