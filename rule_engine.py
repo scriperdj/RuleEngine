@@ -23,7 +23,7 @@ def get_rule(key):
 
 # Check if the record is valid as per rules
 def check_validity(rec):
-    valid = True
+    is_invalid = False
     rule = get_rule(rec["signal"] + "_" + rec["value_type"])
 
     if rule:
@@ -31,13 +31,13 @@ def check_validity(rec):
         if rec["value_type"] == "Datetime":
             left = datetime.now() if rule["value"] == "current" else datetime.strptime(rule["value"], '%Y-%m-%d %H:%M:%S')
             right = datetime.strptime(rec["value"], '%Y-%m-%d %H:%M:%S')
-            valid = opr(left,right)
+            is_invalid = opr(left,right)
         elif rec["value_type"] == "Integer":
-            valid = opr(float(rule["value"]),float(rec["value"]))
+            is_invalid = opr(float(rule["value"]),float(rec["value"]))
         else:
-            valid = opr(str(rule["value"]),str(rec["value"]))
+            is_invalid = opr(str(rule["value"]),str(rec["value"]))
 
-    return valid
+    return is_invalid
 
 def check_date_rules(rec):
     valid = True
@@ -54,9 +54,9 @@ if __name__ == "__main__":
     # Loop through data & check if it violates any rules
     print("Below are data signals which violates rules.\n")
     for rec in raw_data:
-        is_valid = check_validity(rec)
+        is_invalid = check_validity(rec)
 
-        if not is_valid:
-            print(rec)
+        if is_invalid:
+            print(rec["signal"])
 
     print("\n\nEnd of execution..")
